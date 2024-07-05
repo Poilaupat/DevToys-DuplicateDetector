@@ -24,6 +24,12 @@ namespace DuplicateFinderExtension
     )]
     internal sealed class DuplicateFinderGui : IGuiTool
     {
+        private IUIMultiLineTextInput _result = MultiLineTextInput()
+            .Title("Found duplicates")
+            .ReadOnly()
+            .HideCommandBar()
+            .NeverShowLineNumber();
+
         public UIToolView View
             //=> new(Label().Style(UILabelStyle.BodyStrong).Text(DuplicateFinderExtension.HelloWorldLabel));
             => new(
@@ -31,7 +37,7 @@ namespace DuplicateFinderExtension
                 .Vertical()
                 .WithChildren(
                     MultiLineTextInput().Title("Input").Extendable().OnTextChanged(OnInputTextChanged),
-                    MultiLineTextInput().Title("Found duplicates").ReadOnly().HideCommandBar().NeverShowLineNumber())
+                    _result)
                 );
 
         public void OnDataReceived(string dataTypeName, object? parsedData)
@@ -41,7 +47,17 @@ namespace DuplicateFinderExtension
 
         private void OnInputTextChanged(string text)
         {
+            var lines = text.Split("\r\n");
+            var duplicates = FindDuplicates(lines);
+            _result.Text(string.Join("\r\n", duplicates));
+        }
 
+        private IEnumerable<string> FindDuplicates(IEnumerable<string> lines)
+        {
+            return lines
+                .GroupBy(x => x)
+                .Where(g => g.Count() > 1)
+                .Select(g => g.Key);
         }
     }
 }
