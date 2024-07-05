@@ -118,51 +118,52 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AccessibleName" xml:space="preserve">
-    <value>Finding duplicates in a list</value>
+    <value>Trouver des doublons dans une liste</value>
   </data>
   <data name="Configuration" xml:space="preserve">
     <value>Configuration</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Finding duplicates in a list</value>
+    <value>Trouver des doublons dans une liste</value>
   </data>
   <data name="Duplicates" xml:space="preserve">
-    <value>Duplicates</value>
+    <value>Doublons</value>
   </data>
   <data name="Input" xml:space="preserve">
-    <value>Input</value>
+    <value>Entrée</value>
   </data>
   <data name="Length" xml:space="preserve">
-    <value>Length</value>
+    <value>Longueur</value>
   </data>
   <data name="LengthDescription" xml:space="preserve">
-    <value>The length of the substring to consider when searching for duplicates</value>
+    <value>Longueur de la sous-chaîne à prendre en compte pendant la recherche de doublon</value>
   </data>
   <data name="Line" xml:space="preserve">
-    <value>Line</value>
+    <value>Ligne</value>
   </data>
   <data name="LongDisplayTitle" xml:space="preserve">
-    <value>Duplicate finder</value>
+    <value>Localiseur de doublon</value>
   </data>
   <data name="Mode" xml:space="preserve">
     <value>Mode</value>
   </data>
   <data name="ModeDescription" xml:space="preserve">
-    <value>The mode defines how to search for duplicates. “Line” allows you to search for duplicates on the entire line while “Offset/Length” allows you to search for duplicates in a specific part of each line.</value>
+    <value>Le mode permet de modifier la façon de chercher les doublons. “Ligne” permet de chercher les doublons sur les lignes entières alors que “Offset/Longueur” permet de chercher les doublons sur une partie de la ligne.
+</value>
   </data>
   <data name="Offset" xml:space="preserve">
     <value>Offset</value>
   </data>
   <data name="OffsetDescription" xml:space="preserve">
-    <value>The zero-based index of the substring to consider in the line when searching duplicates</value>
+    <value>L'index en base zéro du début de la sous-chaîne à prendre en compte pendant la recherche de doublon</value>
   </data>
   <data name="OffsetLength" xml:space="preserve">
-    <value>Offset / Length</value>
+    <value>Offset / Longueur</value>
   </data>
   <data name="Options" xml:space="preserve">
     <value>Options</value>
   </data>
   <data name="ShortDisplayTitle" xml:space="preserve">
-    <value>Duplicate finder</value>
+    <value>Localiseur de doublon</value>
   </data>
 </root>

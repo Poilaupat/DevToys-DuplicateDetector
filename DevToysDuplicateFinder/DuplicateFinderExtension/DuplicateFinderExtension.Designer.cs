@@ -61,7 +61,7 @@ namespace DuplicateFinderExtension {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An extension for DevToys that finds duplicates in a list.
+        ///   Looks up a localized string similar to Finding duplicates in a list.
         /// </summary>
         internal static string AccessibleName {
             get {
@@ -70,7 +70,16 @@ namespace DuplicateFinderExtension {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An extension for DevToys that finds duplicates in a list.
+        ///   Looks up a localized string similar to Configuration.
+        /// </summary>
+        internal static string Configuration {
+            get {
+                return ResourceManager.GetString("Configuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finding duplicates in a list.
         /// </summary>
         internal static string Description {
             get {
@@ -79,11 +88,47 @@ namespace DuplicateFinderExtension {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hello world !.
+        ///   Looks up a localized string similar to Duplicates.
         /// </summary>
-        internal static string HelloWorldLabel {
+        internal static string Duplicates {
             get {
-                return ResourceManager.GetString("HelloWorldLabel", resourceCulture);
+                return ResourceManager.GetString("Duplicates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input.
+        /// </summary>
+        internal static string Input {
+            get {
+                return ResourceManager.GetString("Input", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Length.
+        /// </summary>
+        internal static string Length {
+            get {
+                return ResourceManager.GetString("Length", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The length of the substring to consider when searching for duplicates.
+        /// </summary>
+        internal static string LengthDescription {
+            get {
+                return ResourceManager.GetString("LengthDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line.
+        /// </summary>
+        internal static string Line {
+            get {
+                return ResourceManager.GetString("Line", resourceCulture);
             }
         }
         
@@ -93,6 +138,60 @@ namespace DuplicateFinderExtension {
         internal static string LongDisplayTitle {
             get {
                 return ResourceManager.GetString("LongDisplayTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mode.
+        /// </summary>
+        internal static string Mode {
+            get {
+                return ResourceManager.GetString("Mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The mode defines how to search for duplicates. “Line” allows you to search for duplicates on the entire line while “Offset/Length” allows you to search for duplicates in a specific part of each line..
+        /// </summary>
+        internal static string ModeDescription {
+            get {
+                return ResourceManager.GetString("ModeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offset.
+        /// </summary>
+        internal static string Offset {
+            get {
+                return ResourceManager.GetString("Offset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The zero-based index of the substring to consider in the line when searching duplicates.
+        /// </summary>
+        internal static string OffsetDescription {
+            get {
+                return ResourceManager.GetString("OffsetDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offset / Length.
+        /// </summary>
+        internal static string OffsetLength {
+            get {
+                return ResourceManager.GetString("OffsetLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        internal static string Options {
+            get {
+                return ResourceManager.GetString("Options", resourceCulture);
             }
         }
         
