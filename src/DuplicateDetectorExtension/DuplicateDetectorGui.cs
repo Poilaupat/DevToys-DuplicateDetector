@@ -245,15 +245,6 @@ namespace DuplicateDetectorExtension
         {
             var highlights = new List<UIHighlightedTextSpan>();
 
-            // Highligths the searched part of the lines (only in Offset/Length mode)
-            if(_lines is not null && mode == EDuplicateMode.OffsetLength)
-            {
-                foreach(var line in _lines.Collection)
-                {
-                    highlights.Add(new UIHighlightedTextSpan(line.Index + line.SearchedOffset, line.SearchedLength, UIHighlightedTextSpanColor.Green));
-                }
-            }
-
             // Highlights the duplicates
             if (_duplicates is not null && _duplicates.Any())
             {
@@ -267,6 +258,23 @@ namespace DuplicateDetectorExtension
 
                         if (line is not null)
                             highlights.Add(new UIHighlightedTextSpan(line.Index + line.SearchedOffset, line.SearchedLength, UIHighlightedTextSpanColor.Red));
+                    }
+                }
+            }
+
+            // Highligths the searched part of the lines (only in Offset/Length mode and if not already highlighted)
+            if(_lines is not null && mode == EDuplicateMode.OffsetLength)
+            {
+                foreach(var line in _lines
+                    .Collection
+                    .Where(l => !string.IsNullOrWhiteSpace(l.Value)))
+                {
+                    if (!highlights.Any(h =>
+                        h.StartPosition == line.Index + line.SearchedOffset &&
+                        h.Length == line.SearchedLength &&
+                        h.Color == UIHighlightedTextSpanColor.Red))
+                    {
+                        highlights.Add(new UIHighlightedTextSpan(line.Index + line.SearchedOffset, line.SearchedLength, UIHighlightedTextSpanColor.Green));
                     }
                 }
             }
