@@ -27,7 +27,7 @@ namespace DuplicateDetectorExtension
         AccessibleNameResourceName = nameof(DuplicateDetectorExtension.AccessibleName)
     )]
     [AcceptedDataTypeName(PredefinedCommonDataTypeNames.Text)]
-    internal sealed class DuplicateDetectorGui : IGuiTool
+    internal sealed class DuplicateDetectorGui : IGuiTool, IDisposable
     {
         #region Enums
 
@@ -165,6 +165,16 @@ namespace DuplicateDetectorExtension
             _logger = this.Log();
 
             OnDuplicateSearchModeChanged(_settingsProvider.GetSetting(_SettingMode));
+        }
+
+        public void Dispose()
+        {
+            if(_cts is not null)
+            {
+                _cts.Cancel();
+                _cts.Dispose();
+            }
+            _semaphore.Dispose();
         }
 
         /// <summary>
@@ -321,7 +331,7 @@ namespace DuplicateDetectorExtension
                         }
                     }
 
-                    // Diplaying result (duplicate + line numbers)
+                    // Diplaying result (duplicates + line numbers)
                     _UITextOutput.Text(
                         string.Join("\r\n", 
                         _duplicates.Select(d => $"{d.Value} [{string.Join(",", d.LineNbrs)}]")));
