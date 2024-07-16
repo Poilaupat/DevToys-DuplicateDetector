@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="DuplicateDetector.Tests" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="DuplicateDetectorExtension.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>DuplicateDetectorExtension.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="DuplicateDetectorExtension.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>DuplicateDetectorExtension.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="DevToys.Api" Version="2.0.2-preview" />
+	</ItemGroup>
+
+</Project>
