@@ -79,7 +79,7 @@ namespace DuplicateDetectorExtension
         private readonly DisposableSemaphore _semaphore = new();
         private readonly ILogger _logger;
         private CancellationTokenSource? _cts;
-        private IList<Duplicate> _duplicates = new List<Duplicate>();
+        private IList<Duplicate>? _duplicates;
         private LineCollection? _lines;
 
         internal Task? WorkTask { get; private set; }
@@ -253,18 +253,21 @@ namespace DuplicateDetectorExtension
                     highlights.Add(new UIHighlightedTextSpan(line.Index + line.SearchedOffset, line.SearchedLength, UIHighlightedTextSpanColor.Green));
                 }
             }
-            
-            // Highlights the duplicates
-            foreach (var lineNumber in _duplicates.SelectMany(d => d.LineNbrs))
-            {
-                if (_lines is not null && _lines.Collection.Any())
-                {
-                    var line = _lines
-                        .Collection
-                        .FirstOrDefault(l => l.LineNumber == lineNumber);
 
-                    if (line is not null)
-                        highlights.Add(new UIHighlightedTextSpan(line.Index + line.SearchedOffset, line.SearchedLength, UIHighlightedTextSpanColor.Red));
+            // Highlights the duplicates
+            if (_duplicates is not null && _duplicates.Any())
+            {
+                foreach (var lineNumber in _duplicates.SelectMany(d => d.LineNbrs))
+                {
+                    if (_lines is not null && _lines.Collection.Any())
+                    {
+                        var line = _lines
+                            .Collection
+                            .FirstOrDefault(l => l.LineNumber == lineNumber);
+
+                        if (line is not null)
+                            highlights.Add(new UIHighlightedTextSpan(line.Index + line.SearchedOffset, line.SearchedLength, UIHighlightedTextSpanColor.Red));
+                    }
                 }
             }
 
