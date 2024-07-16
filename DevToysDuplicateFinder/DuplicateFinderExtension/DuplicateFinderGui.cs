@@ -78,7 +78,8 @@ namespace DuplicateFinderExtension
         private readonly DisposableSemaphore _semaphore = new();
         private readonly ILogger _logger;
         private CancellationTokenSource? _cts;
-        internal IList<Duplicate> _duplicates = new List<Duplicate>();
+        private IList<Duplicate> _duplicates = new List<Duplicate>();
+        private LineCollection? _lines;
 
         internal Task? WorkTask { get; private set; }
 
@@ -215,25 +216,18 @@ namespace DuplicateFinderExtension
         private void SetHighlights()
         {
             var highlights = new List<UIHighlightedTextSpan>();
-            var lines = Regex.Matches(_UITextInput.Text, $"(\r\n)");
-            foreach (var lineNbr in _duplicates
-                .SelectMany(d => d.LineNbrs)
-                .OrderBy(n => n))
+            
+            foreach (var lineNumber in _duplicates.SelectMany(d => d.LineNbrs))
             {
-                int index, length;
-
-                if (lineNbr > 1)
+                if (_lines is not null && _lines.Collection.Any())
                 {
-                    index = lines[lineNbr - 2].Index + 2;
-                    length = lines[lineNbr - 1].Index - lines[lineNbr - 2].Index - 2;
-                }
-                else
-                {
-                    index = 0;
-                    length = lines[lineNbr - 1].Index;
-                }
+                    var line = _lines
+                        .Collection
+                        .FirstOrDefault(l => l.LineNumber == lineNumber);
 
-                highlights.Add(new UIHighlightedTextSpan(index, length, UIHighlightedTextSpanColor.Red));
+                    if (line is not null)
+                        highlights.Add(new UIHighlightedTextSpan(line.LineIndex, line.LineLength, UIHighlightedTextSpanColor.Red));
+                }
             }
 
             _UITextInput.Highlight(highlights.ToArray());
@@ -261,32 +255,26 @@ namespace DuplicateFinderExtension
 
                 try
                 {
-                    LineCollection c = new LineCollection(mode, offset, length);
-                    c.LoadText(text);
+                    _lines = new LineCollection(mode, offset, length);
+                    _lines.LoadText(text);
 
-                    var lines = text
-                        .Split("\r\n")
-                        .AsQueryable();
-
-                    if (mode == EDuplicateMode.OffsetLength)
-                        lines = lines
-                            .Select(l => l.Length >= (offset + length) ? l.Substring(offset, length) : string.Empty);
-
-                    _duplicates = lines
+                    _duplicates = _lines
+                        .Collection
+                        .Select(c => c.SearchedValue)
                         .Where(l => !string.IsNullOrEmpty(l))
                         .GroupBy(l => l)
                         .Where(g => g.Count() > 1)
                         .Select(g => new Duplicate(g.Key))
                         .ToList();
 
-                    foreach(var item in lines.Select((line, index) => new { index, line }))
+                    foreach(var line in _lines.Collection)
                     {
                         var duplicate = _duplicates
-                            .FirstOrDefault(d => d.Value.Equals(item.line));
+                            .FirstOrDefault(d => d.Value.Equals(line.SearchedValue));
 
                         if(duplicate is not null)
                         {
-                            duplicate.LineNbrs.Add(item.index + 1);
+                            duplicate.LineNbrs.Add(line.LineNumber);
                         }
                     }
 

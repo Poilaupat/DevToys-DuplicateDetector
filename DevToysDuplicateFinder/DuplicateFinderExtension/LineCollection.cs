@@ -12,7 +12,7 @@ namespace DuplicateFinderExtension
         public EDuplicateMode Mode { get; private set; }
         public int SubstringOffset { get; private set; }
         public int SubstringLength { get; private set; }
-        public List<LineItem> Lines { get; } = new List<LineItem>();
+        public List<Line> Collection { get; } = new List<Line>();
 
         public LineCollection(EDuplicateMode mode, int substringOffset, int substringLength)
         {
@@ -23,20 +23,27 @@ namespace DuplicateFinderExtension
 
         public void LoadText(string text)
         {
-            Lines.Clear();
+            Collection.Clear();
 
-            var splitter = new Regex("(.*)(\\r\\n|\\n|$)", RegexOptions.Multiline);
+            var splitter = new Regex("([^\\r\\n]*)(\\r\\n|\\n|$)", RegexOptions.Multiline);
             var matches  = splitter.Matches(text);
 
             for (int i = 0; i < matches.Count(); i++)
             {
-                Lines.Add(new LineItem(Mode,
-                    i,
-                    matches[i].Groups[1].Value,
-                    matches[i].Groups[1].Index,
-                    matches[i].Groups[1].Length,
-                    SubstringOffset,
-                    SubstringLength));
+                var value = matches[i].Groups[1].Value;
+                var index = matches[i].Groups[1].Index;
+                var length = matches[i].Groups[1].Length;
+                var substringOffset = Mode == EDuplicateMode.Line ? 0 : SubstringOffset;
+                var substringLength = Mode == EDuplicateMode.Line ? 
+                    length : 
+                    length < SubstringOffset + SubstringLength ? 0 : SubstringLength;
+
+                Collection.Add(new Line(i + 1,
+                    value,
+                    index,
+                    length,
+                    substringOffset,
+                    substringLength));
             }
         }
     }
