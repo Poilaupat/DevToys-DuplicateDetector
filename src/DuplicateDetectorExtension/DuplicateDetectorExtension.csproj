@@ -7,17 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Update="DuplicateFinderExtension.Designer.cs">
+    <Compile Update="DuplicateDetectorExtension.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>DuplicateFinderExtension.resx</DependentUpon>
+      <DependentUpon>DuplicateDetectorExtension.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="DuplicateFinderExtension.resx">
+    <EmbeddedResource Update="DuplicateDetectorExtension.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>DuplicateFinderExtension.Designer.cs</LastGenOutput>
+      <LastGenOutput>DuplicateDetectorExtension.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

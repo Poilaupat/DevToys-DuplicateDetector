@@ -4,8 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DuplicateFinderExtension
+namespace DuplicateDetectorExtension.Models
 {
+    /// <summary>
+    /// The duplicate search mode
+    /// </summary>
     internal enum EDuplicateMode
     {
         Line,

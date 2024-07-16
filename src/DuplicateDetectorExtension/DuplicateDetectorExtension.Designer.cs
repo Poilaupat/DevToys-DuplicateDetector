@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DuplicateFinderExtension {
+namespace DuplicateDetectorExtension {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace DuplicateFinderExtension {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class DuplicateFinderExtension {
+    internal class DuplicateDetectorExtension {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal DuplicateFinderExtension() {
+        internal DuplicateDetectorExtension() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace DuplicateFinderExtension {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DuplicateFinderExtension.DuplicateFinderExtension", typeof(DuplicateFinderExtension).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DuplicateDetectorExtension.DuplicateDetectorExtension", typeof(DuplicateDetectorExtension).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -133,7 +133,7 @@ namespace DuplicateFinderExtension {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Duplicate finder.
+        ///   Looks up a localized string similar to Duplicate detector.
         /// </summary>
         internal static string LongDisplayTitle {
             get {
@@ -151,7 +151,9 @@ namespace DuplicateFinderExtension {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The mode defines how to search for duplicates. “Line” allows you to search for duplicates on the entire line while “Offset/Length” allows you to search for duplicates in a specific part of each line..
+        ///   Looks up a localized string similar to The mode defines how to search for duplicates. 
+        ///“Line” allows you to search for duplicates on the entire line.
+        ///“Offset/Length” allows you to search for duplicates in a specific part of each line..
         /// </summary>
         internal static string ModeDescription {
             get {
@@ -196,7 +198,7 @@ namespace DuplicateFinderExtension {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Duplicate finder.
+        ///   Looks up a localized string similar to Duplicate detector.
         /// </summary>
         internal static string ShortDisplayTitle {
             get {

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DuplicateFinderExtension", "DuplicateFinderExtension\DuplicateFinderExtension.csproj", "{13D60034-1BC4-4116-8284-CEFDC09B220B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DuplicateDetectorExtension", "DuplicateDetectorExtension\DuplicateDetectorExtension.csproj", "{13D60034-1BC4-4116-8284-CEFDC09B220B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -142,13 +142,15 @@
     <value>Ligne</value>
   </data>
   <data name="LongDisplayTitle" xml:space="preserve">
-    <value>Localiseur de doublon</value>
+    <value>Détecteur de doublon</value>
   </data>
   <data name="Mode" xml:space="preserve">
     <value>Mode</value>
   </data>
   <data name="ModeDescription" xml:space="preserve">
-    <value>Le mode permet de modifier la façon de chercher les doublons. “Ligne” permet de chercher les doublons sur les lignes entières alors que “Offset/Longueur” permet de chercher les doublons sur une partie de la ligne.
+    <value>Le mode permet de modifier la façon de chercher les doublons. 
+“Ligne” permet de chercher les doublons sur les lignes entières.
+“Offset/Longueur” permet de chercher les doublons sur une partie de la ligne.
 </value>
   </data>
   <data name="Offset" xml:space="preserve">
@@ -164,6 +166,6 @@
     <value>Options</value>
   </data>
   <data name="ShortDisplayTitle" xml:space="preserve">
-    <value>Localiseur de doublon</value>
+    <value>Détecteur de doublon</value>
   </data>
 </root>

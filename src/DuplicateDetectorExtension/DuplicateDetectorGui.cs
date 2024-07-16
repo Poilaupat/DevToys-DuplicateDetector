@@ -9,24 +9,25 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Text.RegularExpressions;
+using DuplicateDetectorExtension.Models;
 
-namespace DuplicateFinderExtension
+namespace DuplicateDetectorExtension
 {
     [Export(typeof(IGuiTool))]
-    [Name("DuplicateFinder")]
+    [Name("DuplicateDetector")]
     [ToolDisplayInformation(
         IconFontName = "FluentSystemIcon",
-        IconGlyph = '\u26AD',
+        IconGlyph = '\u2315',
         GroupName = PredefinedCommonToolGroupNames.Text,
         ResourceManagerAssemblyIdentifier = nameof(ResourceAssemblyIdentifier),
-        ResourceManagerBaseName = "DuplicateFinderExtension.DuplicateFinderExtension",
-        ShortDisplayTitleResourceName = nameof(DuplicateFinderExtension.ShortDisplayTitle),
-        LongDisplayTitleResourceName = nameof(DuplicateFinderExtension.LongDisplayTitle),
-        DescriptionResourceName = nameof(DuplicateFinderExtension.Description),
-        AccessibleNameResourceName = nameof(DuplicateFinderExtension.AccessibleName)
+        ResourceManagerBaseName = "DuplicateDetectorExtension.DuplicateDetectorExtension",
+        ShortDisplayTitleResourceName = nameof(DuplicateDetectorExtension.ShortDisplayTitle),
+        LongDisplayTitleResourceName = nameof(DuplicateDetectorExtension.LongDisplayTitle),
+        DescriptionResourceName = nameof(DuplicateDetectorExtension.Description),
+        AccessibleNameResourceName = nameof(DuplicateDetectorExtension.AccessibleName)
     )]
     [AcceptedDataTypeName(PredefinedCommonDataTypeNames.Text)]
-    internal sealed class DuplicateFinderGui : IGuiTool
+    internal sealed class DuplicateDetectorGui : IGuiTool
     {
         #region Enums
 
@@ -49,29 +50,29 @@ namespace DuplicateFinderExtension
 
         private static readonly SettingDefinition<EDuplicateMode> _SettingMode
         = new(
-            name: $"{nameof(DuplicateFinderGui)}.{nameof(_SettingMode)}",
+            name: $"{nameof(DuplicateDetectorGui)}.{nameof(_SettingMode)}",
             defaultValue: EDuplicateMode.Line);
 
         private static readonly SettingDefinition<int> _SettingOffset
             = new(
-                name: $"{nameof(DuplicateFinderGui)}.{nameof(_SettingOffset)}",
+                name: $"{nameof(DuplicateDetectorGui)}.{nameof(_SettingOffset)}",
                 defaultValue: 0);
 
         private static readonly SettingDefinition<int> _SettingLength
             = new(
-                name: $"{nameof(DuplicateFinderGui)}.{nameof(_SettingLength)}",
+                name: $"{nameof(DuplicateDetectorGui)}.{nameof(_SettingLength)}",
                 defaultValue: 0);
 
         #endregion
 
         #region UIElements
 
-        private readonly IUISetting _UISettingMode = Setting("duplicate-finder-mode-setting");
-        private readonly IUISetting _UISettingOffset = Setting("duplicate-finder-offset-setting");
-        private readonly IUISetting _UISettingLength = Setting("duplicate-finder-length-setting");
+        private readonly IUISetting _UISettingMode = Setting("duplicate-detector-mode-setting");
+        private readonly IUISetting _UISettingOffset = Setting("duplicate-detector-offset-setting");
+        private readonly IUISetting _UISettingLength = Setting("duplicate-detector-length-setting");
 
-        private IUIMultiLineTextInput _UITextInput = MultiLineTextInput("duplicate-finder-input-text");
-        private IUIMultiLineTextInput _UITextOutput = MultiLineTextInput("duplicate-finder-ouput-text");
+        private IUIMultiLineTextInput _UITextInput = MultiLineTextInput("duplicate-detector-input-text");
+        private IUIMultiLineTextInput _UITextOutput = MultiLineTextInput("duplicate-detector-ouput-text");
 
         #endregion
 
@@ -100,25 +101,25 @@ namespace DuplicateFinderExtension
                                 .Vertical()
                                 .WithChildren(
                                     Label()
-                                        .Text(DuplicateFinderExtension.Configuration),
+                                        .Text(DuplicateDetectorExtension.Configuration),
                                     SettingGroup("")
                                         .Icon("FluentSystemIcons", '\uF6A9')
-                                        .Title(DuplicateFinderExtension.Options)
+                                        .Title(DuplicateDetectorExtension.Options)
                                         .WithSettings(
 
                                             _UISettingMode
-                                                .Title(DuplicateFinderExtension.Mode)
-                                                .Description(DuplicateFinderExtension.ModeDescription)
+                                                .Title(DuplicateDetectorExtension.Mode)
+                                                .Description(DuplicateDetectorExtension.ModeDescription)
                                                 .Handle(
                                                     _settingsProvider,
                                                     _SettingMode,
                                                     onOptionSelected: OnDuplicateSearchModeChanged,
-                                                    Item(DuplicateFinderExtension.Line, EDuplicateMode.Line),
-                                                    Item(DuplicateFinderExtension.OffsetLength, EDuplicateMode.OffsetLength)),
+                                                    Item(DuplicateDetectorExtension.Line, EDuplicateMode.Line),
+                                                    Item(DuplicateDetectorExtension.OffsetLength, EDuplicateMode.OffsetLength)),
 
                                             _UISettingOffset
-                                                .Title(DuplicateFinderExtension.Offset)
-                                                .Description(DuplicateFinderExtension.OffsetDescription)
+                                                .Title(DuplicateDetectorExtension.Offset)
+                                                .Description(DuplicateDetectorExtension.OffsetDescription)
                                                 .InteractiveElement(
                                                     NumberInput()
                                                         .HideCommandBar()
@@ -127,8 +128,8 @@ namespace DuplicateFinderExtension
                                                         .Value(_settingsProvider.GetSetting(_SettingOffset))),
 
                                             _UISettingLength
-                                                .Title(DuplicateFinderExtension.Length)
-                                                .Description(DuplicateFinderExtension.LengthDescription)
+                                                .Title(DuplicateDetectorExtension.Length)
+                                                .Description(DuplicateDetectorExtension.LengthDescription)
                                                 .InteractiveElement(
                                                     NumberInput()
                                                         .HideCommandBar()
@@ -146,19 +147,19 @@ namespace DuplicateFinderExtension
                             .RightPaneLength(new UIGridLength(1d, UIGridUnitType.Fraction))
                             .WithLeftPaneChild(
                                 _UITextInput
-                                .Title(DuplicateFinderExtension.Input)
+                                .Title(DuplicateDetectorExtension.Input)
                                 .Extendable()
                                 .OnTextChanged(OnInputTextChanged))
                             .WithRightPaneChild(
                                 _UITextOutput
-                                .Title(DuplicateFinderExtension.Duplicates)
+                                .Title(DuplicateDetectorExtension.Duplicates)
                                 .ReadOnly()
                                 .HideCommandBar()
                                 .NeverShowLineNumber()))
                     ));
 
         [ImportingConstructor]
-        public DuplicateFinderGui(ISettingsProvider settingsProvider)
+        public DuplicateDetectorGui(ISettingsProvider settingsProvider)
         {
             _settingsProvider = settingsProvider;
             _logger = this.Log();
@@ -166,6 +167,9 @@ namespace DuplicateFinderExtension
             OnDuplicateSearchModeChanged(_settingsProvider.GetSetting(_SettingMode));
         }
 
+        /// <summary>
+        /// Handles the event triggered when user changes the Offset param
+        /// </summary>
         private ValueTask OnOffsetSettingChanged(double value)
         {
             _settingsProvider.SetSetting(_SettingOffset, (int)value);
@@ -173,6 +177,9 @@ namespace DuplicateFinderExtension
             return ValueTask.CompletedTask;
         }
 
+        /// <summary>
+        /// Handles the event triggered when user changes the Length param 
+        /// </summary>
         private ValueTask OnLengthSettingChanged(double value)
         {
             _settingsProvider.SetSetting(_SettingLength, (int)value);
@@ -180,6 +187,9 @@ namespace DuplicateFinderExtension
             return ValueTask.CompletedTask;
         }
 
+        /// <summary>
+        /// Handles the event triggered when user changes the search mode option 
+        /// </summary>
         private ValueTask OnDuplicateSearchModeChanged(EDuplicateMode mode)
         {
             switch (mode)
@@ -199,12 +209,20 @@ namespace DuplicateFinderExtension
             return ValueTask.CompletedTask;
         }
 
+        /// <summary>
+        /// Handles the vent triggered when InputText is changed
+        /// </summary>
         private ValueTask OnInputTextChanged(string _)
         {
             StartProcess();
             return ValueTask.CompletedTask;
         }
 
+        /// <summary>
+        /// Handles the tool chaining event from DevToys
+        /// </summary>
+        /// <param name="dataTypeName"></param>
+        /// <param name="parsedData"></param>
         public void OnDataReceived(string dataTypeName, object? parsedData)
         {
             if (dataTypeName == PredefinedCommonDataTypeNames.Text && parsedData is string text)
@@ -213,10 +231,20 @@ namespace DuplicateFinderExtension
             }
         }
 
-        private void SetHighlights()
+        private void SetHighlights(EDuplicateMode mode)
         {
             var highlights = new List<UIHighlightedTextSpan>();
+
+            // Highligths the searched part of the lines (only in Offset/Length mode)
+            if(_lines is not null && mode == EDuplicateMode.OffsetLength)
+            {
+                foreach(var line in _lines.Collection)
+                {
+                    highlights.Add(new UIHighlightedTextSpan(line.Index + line.SearchedOffset, line.SearchedLength, UIHighlightedTextSpanColor.Green));
+                }
+            }
             
+            // Highlights the duplicates
             foreach (var lineNumber in _duplicates.SelectMany(d => d.LineNbrs))
             {
                 if (_lines is not null && _lines.Collection.Any())
@@ -226,13 +254,16 @@ namespace DuplicateFinderExtension
                         .FirstOrDefault(l => l.LineNumber == lineNumber);
 
                     if (line is not null)
-                        highlights.Add(new UIHighlightedTextSpan(line.LineIndex, line.LineLength, UIHighlightedTextSpanColor.Red));
+                        highlights.Add(new UIHighlightedTextSpan(line.Index + line.SearchedOffset, line.SearchedLength, UIHighlightedTextSpanColor.Red));
                 }
             }
 
             _UITextInput.Highlight(highlights.ToArray());
         }
 
+        /// <summary>
+        /// Starts the search oof the duplicates
+        /// </summary>
         private void StartProcess()
         {
             _cts?.Cancel();
@@ -247,6 +278,15 @@ namespace DuplicateFinderExtension
                     _cts.Token);
         }
 
+        /// <summary>
+        /// Performs the search of the duplicates
+        /// </summary>
+        /// <param name="text">The text to be searched</param>
+        /// <param name="mode">The search mode (Line or Offset/Length)</param>
+        /// <param name="offset">The offset to use when mode is Offset/Length </param>
+        /// <param name="length">The length to use when mode is Offset/Length</param>
+        /// <param name="cts">A cancellation token</param>
+        /// <returns></returns>
         private async Task SearchDuplicates(string text, EDuplicateMode mode, int offset, int length, CancellationToken cts)
         {
             using (await _semaphore.WaitAsync(cts))
@@ -255,9 +295,11 @@ namespace DuplicateFinderExtension
 
                 try
                 {
+                    // Loading text as a collection of lines (compatible UNIX-Windows)
                     _lines = new LineCollection(mode, offset, length);
                     _lines.LoadText(text);
 
+                    // Finding duplicates
                     _duplicates = _lines
                         .Collection
                         .Select(c => c.SearchedValue)
@@ -267,6 +309,7 @@ namespace DuplicateFinderExtension
                         .Select(g => new Duplicate(g.Key))
                         .ToList();
 
+                    // Identifying each line number that is a duplicate 
                     foreach(var line in _lines.Collection)
                     {
                         var duplicate = _duplicates
@@ -278,11 +321,13 @@ namespace DuplicateFinderExtension
                         }
                     }
 
+                    // Diplaying result (duplicate + line numbers)
                     _UITextOutput.Text(
                         string.Join("\r\n", 
-                        _duplicates.Select(d => $"{d.Value}[{string.Join(",", d.LineNbrs)}]")));
+                        _duplicates.Select(d => $"{d.Value} [{string.Join(",", d.LineNbrs)}]")));
 
-                    SetHighlights();
+                    // Highlighting duplicates in the input MultiLine
+                    SetHighlights(mode);
                 }
                 catch (Exception ex)
                 {

@@ -2,7 +2,7 @@
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 
-namespace DuplicateFinderExtension
+namespace DuplicateDetectorExtension
 {
     [Export(typeof(IResourceAssemblyIdentifier))]
     [Name(nameof(ResourceAssemblyIdentifier))]

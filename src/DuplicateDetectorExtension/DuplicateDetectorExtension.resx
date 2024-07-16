@@ -142,13 +142,15 @@
     <value>Line</value>
   </data>
   <data name="LongDisplayTitle" xml:space="preserve">
-    <value>Duplicate finder</value>
+    <value>Duplicate detector</value>
   </data>
   <data name="Mode" xml:space="preserve">
     <value>Mode</value>
   </data>
   <data name="ModeDescription" xml:space="preserve">
-    <value>The mode defines how to search for duplicates. “Line” allows you to search for duplicates on the entire line while “Offset/Length” allows you to search for duplicates in a specific part of each line.</value>
+    <value>The mode defines how to search for duplicates. 
+“Line” allows you to search for duplicates on the entire line.
+“Offset/Length” allows you to search for duplicates in a specific part of each line.</value>
   </data>
   <data name="Offset" xml:space="preserve">
     <value>Offset</value>
@@ -163,6 +165,6 @@
     <value>Options</value>
   </data>
   <data name="ShortDisplayTitle" xml:space="preserve">
-    <value>Duplicate finder</value>
+    <value>Duplicate detector</value>
   </data>
 </root>
