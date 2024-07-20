@@ -79,8 +79,6 @@ namespace DuplicateDetectorExtension
         private readonly DisposableSemaphore _semaphore = new();
         private readonly ILogger _logger;
         private CancellationTokenSource? _cts;
-        private IList<Duplicate>? _duplicates;
-        private LineCollection? _lines;
 
         internal Task? WorkTask { get; private set; }
 
@@ -169,7 +167,7 @@ namespace DuplicateDetectorExtension
 
         public void Dispose()
         {
-            if(_cts is not null)
+            if (_cts is not null)
             {
                 _cts.Cancel();
                 _cts.Dispose();
@@ -241,18 +239,18 @@ namespace DuplicateDetectorExtension
             }
         }
 
-        private void SetHighlights(EDuplicateMode mode)
+        private void SetHighlights(EDuplicateMode mode, LineCollection lines, List<Duplicate> duplicates)
         {
             var highlights = new List<UIHighlightedTextSpan>();
 
             // Highlights the duplicates
-            if (_duplicates is not null && _duplicates.Any())
+            if (duplicates.Any())
             {
-                foreach (var lineNumber in _duplicates.SelectMany(d => d.LineNbrs))
+                foreach (var lineNumber in duplicates.SelectMany(d => d.LineNbrs))
                 {
-                    if (_lines is not null && _lines.Collection.Any())
+                    if (lines.Collection.Any())
                     {
-                        var line = _lines
+                        var line = lines
                             .Collection
                             .FirstOrDefault(l => l.LineNumber == lineNumber);
 
@@ -263,9 +261,9 @@ namespace DuplicateDetectorExtension
             }
 
             // Highligths the searched part of the lines (only in Offset/Length mode and if not already highlighted)
-            if(_lines is not null && mode == EDuplicateMode.OffsetLength)
+            if (mode == EDuplicateMode.OffsetLength)
             {
-                foreach(var line in _lines
+                foreach (var line in lines
                     .Collection
                     .Where(l => !string.IsNullOrWhiteSpace(l.Value)))
                 {
@@ -316,39 +314,33 @@ namespace DuplicateDetectorExtension
 
                 try
                 {
-                    // Loading text as a collection of lines (compatible UNIX-Windows)
-                    _lines = new LineCollection(mode, offset, length);
-                    _lines.LoadText(text);
+                    // Doing search
+                    ResultInfo<(LineCollection, List<Duplicate>)> result = await DuplicateDetectorHelper.SearchDuplicatesAsync(
+                         text,
+                         mode,
+                         offset,
+                         length,
+                         _logger,
+                         cts);
 
-                    // Finding duplicates
-                    _duplicates = _lines
-                        .Collection
-                        .Select(c => c.SearchedValue)
-                        .Where(l => !string.IsNullOrEmpty(l))
-                        .GroupBy(l => l)
-                        .Where(g => g.Count() > 1)
-                        .Select(g => new Duplicate(g.Key))
-                        .ToList();
-
-                    // Identifying each line number that is a duplicate 
-                    foreach(var line in _lines.Collection)
+                    if(!result.HasSucceeded ||
+                        result.Data.Item1 is null ||
+                        result.Data.Item2 is null)
                     {
-                        var duplicate = _duplicates
-                            .FirstOrDefault(d => d.Value.Equals(line.SearchedValue));
-
-                        if(duplicate is not null)
-                        {
-                            duplicate.LineNbrs.Add(line.LineNumber);
-                        }
+                        cts.ThrowIfCancellationRequested();
+                        throw new Exception("The duplicate search has failed");
                     }
+
+                    var lines = result.Data.Item1;
+                    var duplicates = result.Data.Item2;
 
                     // Diplaying result (duplicates + line numbers)
                     _UITextOutput.Text(
-                        string.Join("\r\n", 
-                        _duplicates.Select(d => $"{d.Value} [{string.Join(",", d.LineNbrs)}]")));
+                        string.Join("\r\n",
+                        duplicates.Select(d => $"{d.Value} [{string.Join(",", d.LineNbrs)}]")));
 
                     // Highlighting duplicates in the input MultiLine
-                    SetHighlights(mode);
+                    SetHighlights(mode, lines, duplicates);
                 }
                 catch (Exception ex)
                 {

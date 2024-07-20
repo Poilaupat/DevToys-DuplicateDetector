@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -21,20 +22,23 @@ namespace DuplicateDetectorExtension.Models
         /// <summary>
         /// The user parametrized offset value
         /// </summary>
-        public int Offset { get; private set; }
+        public int? Offset { get; private set; }
 
         /// <summary>
         /// The user parametrized length value
         /// </summary>
-        public int Length { get; private set; }
+        public int? Length { get; private set; }
 
         /// <summary>
         /// The line collection
         /// </summary>
         public List<Line> Collection { get; } = new List<Line>();
 
-        public LineCollection(EDuplicateMode mode, int substringOffset, int substringLength)
+        public LineCollection(EDuplicateMode mode, int? substringOffset = null, int? substringLength = null)
         {
+            if(mode == EDuplicateMode.OffsetLength && (substringOffset is null || substringLength is null))
+                throw new ArgumentNullException($"{nameof(substringOffset)} and {nameof(substringLength)} cannot be null if mode is Offset Length");
+
             Mode = mode;
             Offset = substringOffset;
             Length = substringLength;
@@ -58,10 +62,10 @@ namespace DuplicateDetectorExtension.Models
                 var index = matches[i].Groups[1].Index;
                 var searchedOffset = Mode == EDuplicateMode.Line ?
                     0 :
-                    Offset > value.Length ? 0 : Offset;
+                    Offset > value.Length ? 0 : (int)Offset!;
                 var searchedLength = Mode == EDuplicateMode.Line ?
                     value.Length :
-                    value.Length < Offset + Length ? 0 : Length;
+                    value.Length < Offset + Length ? 0 : (int)Length!;
 
                 Collection.Add(new Line(i + 1,
                     value,

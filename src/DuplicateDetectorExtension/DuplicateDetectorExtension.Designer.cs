@@ -97,11 +97,38 @@ namespace DuplicateDetectorExtension {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error has occured while detecting errors.
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input.
         /// </summary>
         internal static string Input {
             get {
                 return ResourceManager.GetString("Input", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path of the file containing the text to search the duplicates on.
+        /// </summary>
+        internal static string InputDescription {
+            get {
+                return ResourceManager.GetString("InputDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The file &apos;{0}&apos; was not found.
+        /// </summary>
+        internal static string InputFileNotFound {
+            get {
+                return ResourceManager.GetString("InputFileNotFound", resourceCulture);
             }
         }
         
@@ -142,6 +169,24 @@ namespace DuplicateDetectorExtension {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Missing Input parameter.
+        /// </summary>
+        internal static string MissingInput {
+            get {
+                return ResourceManager.GetString("MissingInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If mode is OffsetLength, Offset and Length parameters become mandatory.
+        /// </summary>
+        internal static string MissingOffsetOrLength {
+            get {
+                return ResourceManager.GetString("MissingOffsetOrLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mode.
         /// </summary>
         internal static string Mode {
@@ -158,6 +203,15 @@ namespace DuplicateDetectorExtension {
         internal static string ModeDescription {
             get {
                 return ResourceManager.GetString("ModeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No duplicate found.
+        /// </summary>
+        internal static string NoDuplicateFound {
+            get {
+                return ResourceManager.GetString("NoDuplicateFound", resourceCulture);
             }
         }
         
@@ -194,6 +248,15 @@ namespace DuplicateDetectorExtension {
         internal static string Options {
             get {
                 return ResourceManager.GetString("Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The result output file.
+        /// </summary>
+        internal static string OutputFileDescription {
+            get {
+                return ResourceManager.GetString("OutputFileDescription", resourceCulture);
             }
         }
         
