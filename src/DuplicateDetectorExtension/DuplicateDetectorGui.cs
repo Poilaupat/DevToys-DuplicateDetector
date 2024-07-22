@@ -323,7 +323,7 @@ namespace DuplicateDetectorExtension
                          _logger,
                          cts);
 
-                    if(!result.HasSucceeded ||
+                    if (!result.HasSucceeded ||
                         result.Data.Item1 is null ||
                         result.Data.Item2 is null)
                     {
@@ -342,6 +342,10 @@ namespace DuplicateDetectorExtension
                     // Highlighting duplicates in the input MultiLine
                     SetHighlights(mode, lines, duplicates);
                 }
+                catch (OperationCanceledException) 
+                {
+                    return; //Do not log an error if the exception comes from a user operation cancellation
+                } 
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, $"Error while searching duplicates (Mode = {mode})");
