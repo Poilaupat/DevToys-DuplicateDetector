@@ -1,5 +1,4 @@
 {
-  "$schema": "https://json.schemastore.org/launchsettings.json",
   "profiles": {
     "DevToys GUI": {
       "commandName": "Executable",
@@ -11,10 +10,19 @@
     "DevToys CLI": {
       "commandName": "Executable",
       "executablePath": "%DevToysCliDebugEntryPoint%",
-      "commandLineArgs": "",
+      "commandLineArgs": "duplicatedetector --input \"..\\..\\..\\..\\..\\doc\\SampleOffsetLength.txt\" --mode OffsetLength --offset 2 --length 4\r\n",
+      "environmentVariables": {
+        "EXTRAPLUGIN": "$(TargetDir)"
+      }
+    },
+    "Profile 1": {
+      "commandName": "Executable",
+      "executablePath": "%DevToysCliDebugEntryPoint%",
+      "commandLineArgs": "duplicatedetector --input \"..\\..\\..\\..\\..\\doc\\SampleLine.txt\" --mode OffsetLength --offset 3 --length 4\r\n",
       "environmentVariables": {
         "EXTRAPLUGIN": "$(TargetDir)"
       }
     }
-  }
+  },
+  "$schema": "https://json.schemastore.org/launchsettings.json"
 }

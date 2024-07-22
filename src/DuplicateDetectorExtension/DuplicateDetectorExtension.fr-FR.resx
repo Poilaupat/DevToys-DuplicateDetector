@@ -129,8 +129,17 @@
   <data name="Duplicates" xml:space="preserve">
     <value>Doublons</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Une erreur s'est produite pendant la détection de doublon</value>
+  </data>
   <data name="Input" xml:space="preserve">
     <value>Entrée</value>
+  </data>
+  <data name="InputDescription" xml:space="preserve">
+    <value>Chemin du fichier contenant le text où chercher les doublons</value>
+  </data>
+  <data name="InputFileNotFound" xml:space="preserve">
+    <value>Le fichier '{0}' n'a pas été trouvé</value>
   </data>
   <data name="Length" xml:space="preserve">
     <value>Longueur</value>
@@ -144,6 +153,12 @@
   <data name="LongDisplayTitle" xml:space="preserve">
     <value>Détecteur de doublon</value>
   </data>
+  <data name="MissingInput" xml:space="preserve">
+    <value>Le paramètre fichier n'a pas été spécifié</value>
+  </data>
+  <data name="MissingOffsetOrLength" xml:space="preserve">
+    <value>Si le mode est OffsetLength, les paramètres offset et length deviennent obligatoires</value>
+  </data>
   <data name="Mode" xml:space="preserve">
     <value>Mode</value>
   </data>
@@ -152,6 +167,9 @@
 “Ligne” permet de chercher les doublons sur les lignes entières.
 “Offset/Longueur” permet de chercher les doublons sur une partie de la ligne.
 </value>
+  </data>
+  <data name="NoDuplicateFound" xml:space="preserve">
+    <value>Aucun doublon trouvé</value>
   </data>
   <data name="Offset" xml:space="preserve">
     <value>Offset</value>
@@ -164,6 +182,9 @@
   </data>
   <data name="Options" xml:space="preserve">
     <value>Options</value>
+  </data>
+  <data name="OutputFileDescription" xml:space="preserve">
+    <value>Chemin du fichier où sauvegarder les résultats</value>
   </data>
   <data name="ShortDisplayTitle" xml:space="preserve">
     <value>Détecteur de doublon</value>
