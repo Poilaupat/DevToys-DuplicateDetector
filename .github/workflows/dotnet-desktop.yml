@@ -1,0 +1,31 @@
+name: build-plugin
+on: 
+  push:
+    branches: [main]
+env:
+  DOTNET_VERSION: '8.0.x'
+  SOLUTION: 'DevToysDuplicateDetector.sln'
+  
+jobs:
+  build:
+   runs-on: windows-latest
+   steps:
+     - uses: actions/checkout@v4
+     
+     - name: Setup .NET
+       uses: actions/setup-dotnet@v4
+       with: 
+         dotnet-version: ${{ env.DOTNET_VERSION }}
+
+     - name: Clean
+       run: dotnet clean -c Release ${{ env.SOLUTION }}
+
+     - name: Restore
+       run: dotnet restore -c Release ${{ env.SOLUTION }}
+
+     - name: Build
+       run: dotnet build -c Release  ${{ env.SOLUTION }} --no-restore
+
+     - name : Test
+       run: dotnet test -c Release ${{ enc.SOLUTION }} --no-build
+      
