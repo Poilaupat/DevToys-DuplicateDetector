@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Text.RegularExpressions;
 using DuplicateDetectorExtension.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DuplicateDetectorExtension
 {
@@ -49,9 +50,9 @@ namespace DuplicateDetectorExtension
         private readonly ISettingsProvider _settingsProvider;
 
         private static readonly SettingDefinition<EDuplicateMode> _SettingMode
-        = new(
-            name: $"{nameof(DuplicateDetectorGui)}.{nameof(_SettingMode)}",
-            defaultValue: EDuplicateMode.Line);
+            = new(
+                name: $"{nameof(DuplicateDetectorGui)}.{nameof(_SettingMode)}",
+                defaultValue: EDuplicateMode.Line);
 
         private static readonly SettingDefinition<int> _SettingOffset
             = new(
@@ -63,6 +64,11 @@ namespace DuplicateDetectorExtension
                 name: $"{nameof(DuplicateDetectorGui)}.{nameof(_SettingLength)}",
                 defaultValue: 0);
 
+        private static readonly SettingDefinition<ERemoveDuplicateMode> _SettingRemoveMode
+            = new(
+                name: $"{nameof(DuplicateDetectorGui)}.{nameof(_SettingRemoveMode)}",
+                defaultValue: ERemoveDuplicateMode.KeepFirstOccurence);
+
         #endregion
 
         #region UIElements
@@ -70,9 +76,12 @@ namespace DuplicateDetectorExtension
         private readonly IUISetting _UISettingMode = Setting("duplicate-detector-mode-setting");
         private readonly IUISetting _UISettingOffset = Setting("duplicate-detector-offset-setting");
         private readonly IUISetting _UISettingLength = Setting("duplicate-detector-length-setting");
+        private readonly IUISetting _UISettingRemoveMode = Setting("duplicate-detector-remove-mode-setting");
 
         private IUIMultiLineTextInput _UITextInput = MultiLineTextInput("duplicate-detector-input-text");
         private IUIMultiLineTextInput _UITextOutput = MultiLineTextInput("duplicate-detector-ouput-text");
+
+        private IUIButton _UIRemoveDuplicatesButton = Button("duplicate-detector-remove-button");
 
         #endregion
 
@@ -81,6 +90,8 @@ namespace DuplicateDetectorExtension
         private CancellationTokenSource? _cts;
 
         internal Task? WorkTask { get; private set; }
+
+        //internal List<Duplicate> Duplicates { get; private set; } = new List<Duplicate>();
 
         public UIToolView View
             => new(
@@ -106,18 +117,18 @@ namespace DuplicateDetectorExtension
                                         .WithSettings(
 
                                             _UISettingMode
-                                                .Title(DuplicateDetectorExtension.Mode)
-                                                .Description(DuplicateDetectorExtension.ModeDescription)
+                                                .Title(DuplicateDetectorExtension.ModeSetting)
+                                                .Description(DuplicateDetectorExtension.ModeSettingDescription)
                                                 .Handle(
                                                     _settingsProvider,
                                                     _SettingMode,
                                                     onOptionSelected: OnDuplicateSearchModeChanged,
-                                                    Item(DuplicateDetectorExtension.Line, EDuplicateMode.Line),
-                                                    Item(DuplicateDetectorExtension.OffsetLength, EDuplicateMode.OffsetLength)),
+                                                    Item(DuplicateDetectorExtension.ModeSettingLine, EDuplicateMode.Line),
+                                                    Item(DuplicateDetectorExtension.ModeSettingOffsetLength, EDuplicateMode.OffsetLength)),
 
                                             _UISettingOffset
-                                                .Title(DuplicateDetectorExtension.Offset)
-                                                .Description(DuplicateDetectorExtension.OffsetDescription)
+                                                .Title(DuplicateDetectorExtension.OffsetSetting)
+                                                .Description(DuplicateDetectorExtension.OffsetSettingDescription)
                                                 .InteractiveElement(
                                                     NumberInput()
                                                         .HideCommandBar()
@@ -126,14 +137,25 @@ namespace DuplicateDetectorExtension
                                                         .Value(_settingsProvider.GetSetting(_SettingOffset))),
 
                                             _UISettingLength
-                                                .Title(DuplicateDetectorExtension.Length)
-                                                .Description(DuplicateDetectorExtension.LengthDescription)
+                                                .Title(DuplicateDetectorExtension.LengthSetting)
+                                                .Description(DuplicateDetectorExtension.LengthSettingDescription)
                                                 .InteractiveElement(
                                                     NumberInput()
                                                         .HideCommandBar()
                                                         .Minimum(1)
                                                         .OnValueChanged(OnLengthSettingChanged)
-                                                        .Value(_settingsProvider.GetSetting(_SettingLength)))
+                                                        .Value(_settingsProvider.GetSetting(_SettingLength))),
+
+                                            _UISettingRemoveMode
+                                                .Title(DuplicateDetectorExtension.UnduplicateSettingTitle)
+                                                .Description(DuplicateDetectorExtension.UndiplicateSettingDescription)
+                                                .Handle(
+                                                    _settingsProvider,
+                                                    _SettingRemoveMode,
+                                                    null,
+                                                    Item(DuplicateDetectorExtension.UnduplicateModeSettingKeepFirst, ERemoveDuplicateMode.KeepFirstOccurence),
+                                                    Item(DuplicateDetectorExtension.UnduplicateModeSettingKeepLast, ERemoveDuplicateMode.KeepLastOccurence),
+                                                    Item(DuplicateDetectorExtension.UnduplicateModeSettingRemoveAll, ERemoveDuplicateMode.RemoveAll))
                                         )
                                 )
                             ),
@@ -146,6 +168,11 @@ namespace DuplicateDetectorExtension
                             .WithLeftPaneChild(
                                 _UITextInput
                                 .Title(DuplicateDetectorExtension.Input)
+                                .CommandBarExtraContent(
+                                    _UIRemoveDuplicatesButton
+                                    .Text(DuplicateDetectorExtension.RemoveButtonTitle)
+                                    .OnClick(OnRemoveButtonClicked)
+                                    .Disable())
                                 .Extendable()
                                 .OnTextChanged(OnInputTextChanged))
                             .WithRightPaneChild(
@@ -181,7 +208,7 @@ namespace DuplicateDetectorExtension
         private ValueTask OnOffsetSettingChanged(double value)
         {
             _settingsProvider.SetSetting(_SettingOffset, (int)value);
-            StartProcess();
+            StartSearchProcess();
             return ValueTask.CompletedTask;
         }
 
@@ -191,7 +218,7 @@ namespace DuplicateDetectorExtension
         private ValueTask OnLengthSettingChanged(double value)
         {
             _settingsProvider.SetSetting(_SettingLength, (int)value);
-            StartProcess();
+            StartSearchProcess();
             return ValueTask.CompletedTask;
         }
 
@@ -213,24 +240,31 @@ namespace DuplicateDetectorExtension
                     break;
             }
 
-            StartProcess();
+            StartSearchProcess();
             return ValueTask.CompletedTask;
         }
 
         /// <summary>
-        /// Handles the vent triggered when InputText is changed
+        /// Handles the event triggered when InputText is changed
         /// </summary>
         private ValueTask OnInputTextChanged(string _)
         {
-            StartProcess();
+            StartSearchProcess();
+            return ValueTask.CompletedTask;
+        }
+
+        /// <summary>
+        /// Handles the event triggered when the remove button is clicked
+        /// </summary>
+        private ValueTask OnRemoveButtonClicked()
+        {
+            StartUnduplicateProcess();
             return ValueTask.CompletedTask;
         }
 
         /// <summary>
         /// Handles the tool chaining event from DevToys
         /// </summary>
-        /// <param name="dataTypeName"></param>
-        /// <param name="parsedData"></param>
         public void OnDataReceived(string dataTypeName, object? parsedData)
         {
             if (dataTypeName == PredefinedCommonDataTypeNames.Text && parsedData is string text)
@@ -239,31 +273,37 @@ namespace DuplicateDetectorExtension
             }
         }
 
-        private void SetHighlights(EDuplicateMode mode, LineCollection lines, List<Duplicate> duplicates)
+        /// <summary>
+        /// Highlights the found duplicates. Also highligths searched parts of the lines in offset mode
+        /// </summary>
+        private void SetHighlights(EDuplicateMode mode, DuplicateSearchResult dsr, CancellationToken ct)
         {
             var highlights = new List<UIHighlightedTextSpan>();
 
+
             // Highlights the duplicates
-            if (duplicates.Any())
+            if (dsr.Duplicates.Any())
             {
-                foreach (var lineNumber in duplicates.SelectMany(d => d.LineNbrs))
+                foreach (var lineNumber in dsr.Duplicates.SelectMany(d => d.LineNbrs))
                 {
-                    if (lines.Collection.Any())
+                    if (dsr.Lines.Collection.Any())
                     {
-                        var line = lines
+                        var line = dsr.Lines
                             .Collection
                             .FirstOrDefault(l => l.LineNumber == lineNumber);
 
                         if (line is not null)
                             highlights.Add(new UIHighlightedTextSpan(line.Index + line.SearchedOffset, line.SearchedLength, UIHighlightedTextSpanColor.Red));
                     }
+
+                    ct.ThrowIfCancellationRequested();
                 }
             }
 
             // Highligths the searched part of the lines (only in Offset/Length mode and if not already highlighted)
             if (mode == EDuplicateMode.OffsetLength)
             {
-                foreach (var line in lines
+                foreach (var line in dsr.Lines
                     .Collection
                     .Where(l => !string.IsNullOrWhiteSpace(l.Value)))
                 {
@@ -274,6 +314,8 @@ namespace DuplicateDetectorExtension
                     {
                         highlights.Add(new UIHighlightedTextSpan(line.Index + line.SearchedOffset, line.SearchedLength, UIHighlightedTextSpanColor.Green));
                     }
+
+                    ct.ThrowIfCancellationRequested();
                 }
             }
 
@@ -281,9 +323,21 @@ namespace DuplicateDetectorExtension
         }
 
         /// <summary>
-        /// Starts the search oof the duplicates
+        /// Activates or deactivates the remove duplicates button
         /// </summary>
-        private void StartProcess()
+        /// <param name="enable"></param>
+        private void SetRemoveButtonActivation(bool enable)
+        {
+            if (enable)
+                _UIRemoveDuplicatesButton.Enable();
+            else
+                _UIRemoveDuplicatesButton.Disable();
+        }
+
+        /// <summary>
+        /// Starts the search of the duplicates
+        /// </summary>
+        private void StartSearchProcess()
         {
             _cts?.Cancel();
             _cts?.Dispose();
@@ -304,51 +358,103 @@ namespace DuplicateDetectorExtension
         /// <param name="mode">The search mode (Line or Offset/Length)</param>
         /// <param name="offset">The offset to use when mode is Offset/Length </param>
         /// <param name="length">The length to use when mode is Offset/Length</param>
-        /// <param name="cts">A cancellation token</param>
+        /// <param name="ct">A cancellation token</param>
         /// <returns></returns>
-        private async Task SearchDuplicates(string text, EDuplicateMode mode, int offset, int length, CancellationToken cts)
+        private async Task SearchDuplicates(
+            string text,
+            EDuplicateMode mode,
+            int offset,
+            int length,
+            CancellationToken ct)
         {
-            using (await _semaphore.WaitAsync(cts))
+            using (await _semaphore.WaitAsync(ct))
             {
-                await TaskSchedulerAwaiter.SwitchOffMainThreadAsync(cts);
+                await TaskSchedulerAwaiter.SwitchOffMainThreadAsync(ct);
 
                 try
                 {
                     // Doing search
-                    ResultInfo<(LineCollection, List<Duplicate>)> result = await DuplicateDetectorHelper.SearchDuplicatesAsync(
+                    var dsr = DuplicateDetectorHelper.SearchDuplicates(
                          text,
                          mode,
                          offset,
                          length,
-                         _logger,
-                         cts);
+                         ct);
 
-                    if (!result.HasSucceeded ||
-                        result.Data.Item1 is null ||
-                        result.Data.Item2 is null)
-                    {
-                        cts.ThrowIfCancellationRequested();
-                        throw new Exception("The duplicate search has failed");
-                    }
-
-                    var lines = result.Data.Item1;
-                    var duplicates = result.Data.Item2;
 
                     // Diplaying result (duplicates + line numbers)
                     _UITextOutput.Text(
                         string.Join("\r\n",
-                        duplicates.Select(d => $"{d.Value} [{string.Join(",", d.LineNbrs)}]")));
+                        dsr.Duplicates.Select(d => $"{d.Value} [{string.Join(",", d.LineNbrs)}]")));
 
-                    // Highlighting duplicates in the input MultiLine
-                    SetHighlights(mode, lines, duplicates);
+                    SetHighlights(mode, dsr, ct);
+
+                    SetRemoveButtonActivation(dsr.Duplicates.Any());
                 }
-                catch (OperationCanceledException) 
+                catch (OperationCanceledException)
                 {
                     return; //Do not log an error if the exception comes from a user operation cancellation
-                } 
+                }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, $"Error while searching duplicates (Mode = {mode})");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Starts removing the duplicates
+        /// </summary>
+        private void StartUnduplicateProcess()
+        {
+            _cts?.Cancel();
+            _cts?.Dispose();
+            _cts = new CancellationTokenSource();
+
+            WorkTask = RemoveDuplicates(
+                _UITextInput.Text,
+                _settingsProvider.GetSetting(_SettingMode),
+                _settingsProvider.GetSetting(_SettingOffset),
+                _settingsProvider.GetSetting(_SettingLength),
+                _settingsProvider.GetSetting(_SettingRemoveMode),
+                _cts.Token);
+        }
+
+        /// <summary>
+        /// Performs the unduplicate operation
+        /// </summary>
+        /// <returns></returns>
+        private async Task RemoveDuplicates(
+            string text,
+            EDuplicateMode mode,
+            int offset,
+            int length,
+            ERemoveDuplicateMode unduplicateMode,
+            CancellationToken ct)
+        {
+            using (await _semaphore.WaitAsync(ct))
+            {
+                await TaskSchedulerAwaiter.SwitchOffMainThreadAsync(ct);
+
+                try
+                {
+                    var cleanedLines = DuplicateDetectorHelper.RemoveDuplicates(
+                        text,
+                        mode,
+                        offset,
+                        length,
+                        unduplicateMode,
+                        ct);
+
+                    _UITextInput.Text(string.Join("\n", cleanedLines));
+                }
+                catch (OperationCanceledException)
+                {
+                    return; //Do not log an error if the exception comes from a user operation cancellation
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, $"Error while removing duplicates");
                 }
             }
         }

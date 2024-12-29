@@ -141,14 +141,11 @@
   <data name="InputFileNotFound" xml:space="preserve">
     <value>The file '{0}' was not found</value>
   </data>
-  <data name="Length" xml:space="preserve">
+  <data name="LengthSetting" xml:space="preserve">
     <value>Length</value>
   </data>
-  <data name="LengthDescription" xml:space="preserve">
+  <data name="LengthSettingDescription" xml:space="preserve">
     <value>The length of the substring to consider when searching for duplicates</value>
-  </data>
-  <data name="Line" xml:space="preserve">
-    <value>Line</value>
   </data>
   <data name="LongDisplayTitle" xml:space="preserve">
     <value>Duplicate detector</value>
@@ -159,25 +156,28 @@
   <data name="MissingOffsetOrLength" xml:space="preserve">
     <value>If mode is OffsetLength, Offset and Length parameters become mandatory</value>
   </data>
-  <data name="Mode" xml:space="preserve">
+  <data name="ModeSetting" xml:space="preserve">
     <value>Mode</value>
   </data>
-  <data name="ModeDescription" xml:space="preserve">
+  <data name="ModeSettingDescription" xml:space="preserve">
     <value>The mode defines how to search for duplicates. 
 “Line” allows you to search for duplicates on the entire line.
 “Offset/Length” allows you to search for duplicates in a specific part of each line.</value>
   </data>
+  <data name="ModeSettingLine" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="ModeSettingOffsetLength" xml:space="preserve">
+    <value>Offset / Length</value>
+  </data>
   <data name="NoDuplicateFound" xml:space="preserve">
     <value>No duplicate found</value>
   </data>
-  <data name="Offset" xml:space="preserve">
+  <data name="OffsetSetting" xml:space="preserve">
     <value>Offset</value>
   </data>
-  <data name="OffsetDescription" xml:space="preserve">
+  <data name="OffsetSettingDescription" xml:space="preserve">
     <value>The zero-based index of the substring to consider in the line when searching duplicates</value>
-  </data>
-  <data name="OffsetLength" xml:space="preserve">
-    <value>Offset / Length</value>
   </data>
   <data name="Options" xml:space="preserve">
     <value>Options</value>
@@ -185,7 +185,34 @@
   <data name="OutputFileDescription" xml:space="preserve">
     <value>The result output file</value>
   </data>
+  <data name="RemoveButtonTitle" xml:space="preserve">
+    <value>Unduplicate</value>
+  </data>
+  <data name="RemoveDuplicatesModeSettingDescription" xml:space="preserve">
+    <value>Controls the way duplicates are removed :
+"KeepFirstOccurence" : Removes duplicates but first
+"KeepLastOccurence" : Removes duplicates but last
+"RemoveAll" : Removes all duplicates</value>
+  </data>
+  <data name="RemoveDuplicatesSettingDescription" xml:space="preserve">
+    <value>By default, output will show found duplicates. If this flag is set, the input text with removed duplicates will be shown instead. </value>
+  </data>
   <data name="ShortDisplayTitle" xml:space="preserve">
     <value>Duplicate detector</value>
+  </data>
+  <data name="UndiplicateSettingDescription" xml:space="preserve">
+    <value>Controls the way duplicates are removed. RemoveAll removes all lines containing duplicates while KeepFirst or KeepLast keep the first/last occurence</value>
+  </data>
+  <data name="UnduplicateModeSettingKeepFirst" xml:space="preserve">
+    <value>Keep First</value>
+  </data>
+  <data name="UnduplicateModeSettingKeepLast" xml:space="preserve">
+    <value>Keep Last</value>
+  </data>
+  <data name="UnduplicateModeSettingRemoveAll" xml:space="preserve">
+    <value>Remove All</value>
+  </data>
+  <data name="UnduplicateSettingTitle" xml:space="preserve">
+    <value>Unduplicate mode</value>
   </data>
 </root>

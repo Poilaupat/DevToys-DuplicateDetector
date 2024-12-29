@@ -32,6 +32,10 @@ This mode searches for duplicates on whole lines.
 This mode allows you to configure a part of the line (with a zero-based offset and a length) to search for duplicates. In this mode, the searched part of the lines is highlighted in green, while the found duplicates are still highlighted in red.
 ![OffsetLengthMode](doc/dde-doc-mode-offsetlength.png)
 
+### Removing duplicates
+If duplicates are found, you have additionaly the possibility to remove them from the displayed text. Just click on the "Unduplicate" button.
+You can control the way duplicates are removed in the option panel.
+
 ## DuplicateDetector in DevToys CLI 
 
 ### Installation
@@ -58,3 +62,12 @@ Line mode is the default mode so you can also have the same result with this mor
 or
 
 `.\DevToys.CLI dd -i "<Your File>" -m OffsetLength -off 2 -len 5`
+
+#### Removing duplicates
+
+If the flag `--remove-duplicates` or `-rd` is set, the output will change to display original text with duplicates removed
+
+You can control the way duplicates are removed this the option `--remove-duplicates-mode` or `-drm` that can take the following values :
+- `KeepFirstOccurence`
+- `KeepLastOccurence`
+- `RemoveAll`

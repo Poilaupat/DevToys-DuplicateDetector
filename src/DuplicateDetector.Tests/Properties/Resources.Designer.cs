@@ -61,6 +61,19 @@ namespace DuplicateDetector.Tests.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to un
+        ///deux
+        ///un
+        ///trois
+        ///un.
+        /// </summary>
+        internal static string Deduplicate_LineTest {
+            get {
+                return ResourceManager.GetString("Deduplicate_LineTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Milou
         ///Idefix
         ///Rantanplan
