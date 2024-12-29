@@ -28,5 +28,5 @@ jobs:
        run: dotnet build -c Release  ${{ env.SOLUTION }} --no-restore
 
      - name : Test
-       run: dotnet test -c Release ${{ enc.SOLUTION }} --no-build
+       run: dotnet test -c Release ${{ env.SOLUTION }} --no-build
       
