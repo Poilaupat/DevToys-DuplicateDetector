@@ -22,7 +22,7 @@ jobs:
        run: dotnet clean -c Release ${{ env.SOLUTION }}
 
      - name: Restore
-       run: dotnet restore -c Release ${{ env.SOLUTION }}
+       run: dotnet restore ${{ env.SOLUTION }}
 
      - name: Build
        run: dotnet build -c Release  ${{ env.SOLUTION }} --no-restore
