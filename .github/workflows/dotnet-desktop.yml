@@ -5,7 +5,7 @@ on:
     branches: [main]
 env:
   DOTNET_VERSION: '8.0.x'
-  SOLUTION: 'DevToysDuplicateDetector.sln'
+  SOLUTION: 'src/DevToysDuplicateDetector.sln'
   
 jobs:
   build:
