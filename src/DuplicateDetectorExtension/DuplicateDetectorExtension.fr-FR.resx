@@ -136,19 +136,10 @@
     <value>Entrée</value>
   </data>
   <data name="InputDescription" xml:space="preserve">
-    <value>Chemin du fichier contenant le text où chercher les doublons</value>
+    <value>Chemin du fichier contenant le texte où chercher les doublons</value>
   </data>
   <data name="InputFileNotFound" xml:space="preserve">
     <value>Le fichier '{0}' n'a pas été trouvé</value>
-  </data>
-  <data name="Length" xml:space="preserve">
-    <value>Longueur</value>
-  </data>
-  <data name="LengthDescription" xml:space="preserve">
-    <value>Longueur de la sous-chaîne à prendre en compte pendant la recherche de doublon</value>
-  </data>
-  <data name="Line" xml:space="preserve">
-    <value>Ligne</value>
   </data>
   <data name="LongDisplayTitle" xml:space="preserve">
     <value>Détecteur de doublon</value>
@@ -159,26 +150,8 @@
   <data name="MissingOffsetOrLength" xml:space="preserve">
     <value>Si le mode est OffsetLength, les paramètres offset et length deviennent obligatoires</value>
   </data>
-  <data name="Mode" xml:space="preserve">
-    <value>Mode</value>
-  </data>
-  <data name="ModeDescription" xml:space="preserve">
-    <value>Le mode permet de modifier la façon de chercher les doublons. 
-“Ligne” permet de chercher les doublons sur les lignes entières.
-“Offset/Longueur” permet de chercher les doublons sur une partie de la ligne.
-</value>
-  </data>
   <data name="NoDuplicateFound" xml:space="preserve">
     <value>Aucun doublon trouvé</value>
-  </data>
-  <data name="Offset" xml:space="preserve">
-    <value>Offset</value>
-  </data>
-  <data name="OffsetDescription" xml:space="preserve">
-    <value>L'index en base zéro du début de la sous-chaîne à prendre en compte pendant la recherche de doublon</value>
-  </data>
-  <data name="OffsetLength" xml:space="preserve">
-    <value>Offset / Longueur</value>
   </data>
   <data name="Options" xml:space="preserve">
     <value>Options</value>
@@ -188,5 +161,58 @@
   </data>
   <data name="ShortDisplayTitle" xml:space="preserve">
     <value>Détecteur de doublon</value>
+  </data>
+  <data name="LengthSetting" xml:space="preserve">
+    <value>Length</value>
+  </data>
+  <data name="LengthSettingDescription" xml:space="preserve">
+    <value>Longueur de la sous-chaîne à prendre en compte dans la recherche de doublon</value>
+  </data>
+  <data name="ModeSetting" xml:space="preserve">
+    <value>Mode</value>
+  </data>
+  <data name="ModeSettingDescription" xml:space="preserve">
+    <value>Le mode contrôle la façon de chercher les doublons. 
+“Line” permet de chercher sur des lignes entières.
+“Offset/Length” permet de chercher sur une portion de la ligne</value>
+  </data>
+  <data name="ModeSettingLine" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="ModeSettingOffsetLength" xml:space="preserve">
+    <value>Offset / Length</value>
+  </data>
+  <data name="OffsetSetting" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="OffsetSettingDescription" xml:space="preserve">
+    <value>L'index en base zéro à prendre en compte lors d'une recherche de doublon</value>
+  </data>
+  <data name="RemoveButtonTitle" xml:space="preserve">
+    <value>Dédoublonner</value>
+  </data>
+  <data name="RemoveDuplicatesModeSettingDescription" xml:space="preserve">
+    <value>Contrôle la manière dont les doublons sont supprimés :
+"KeepFirstOccurence" : Garde uniquement la première occurence
+"KeepLastOccurence" : Garde uniquement la dernière occurence
+"RemoveAll" : Supprime toutes les occurences</value>
+  </data>
+  <data name="RemoveDuplicatesSettingDescription" xml:space="preserve">
+    <value>Par défault, la sortie affichera les doublons trouvés. Si ce flag est positionné, le texte en entrée avec les doublons supprimés sera affiché à la place</value>
+  </data>
+  <data name="UndiplicateSettingDescription" xml:space="preserve">
+    <value>Contrôle la façon dont les doublons sont retirés. RemoveAll supprime toutes les ligne contenant des doublons, tandis que KeepFirst/KeepLast garde la première/dernière occurence</value>
+  </data>
+  <data name="UnduplicateModeSettingKeepFirst" xml:space="preserve">
+    <value>Garder la première occurence</value>
+  </data>
+  <data name="UnduplicateModeSettingKeepLast" xml:space="preserve">
+    <value>Garder la dernière occurence</value>
+  </data>
+  <data name="UnduplicateModeSettingRemoveAll" xml:space="preserve">
+    <value>Supprimer toutes les occurences</value>
+  </data>
+  <data name="UnduplicateSettingTitle" xml:space="preserve">
+    <value>Mode de suppression des doublons</value>
   </data>
 </root>

@@ -138,5 +138,113 @@ namespace DuplicateDetector.Tests
             string consoleOutput = _consoleWriter.ToString().Trim();
             consoleOutput.Should().Be("aaaa[1,6]\ndddd[4,9]");
         }
+
+        [Fact]
+        public async void LineModeRemove_KeepFirst()
+        {
+            string filepath = Path.Combine("TestData", "LineWithDuplicates.txt");
+            _tool.Input = new FileInfo(filepath);
+
+            _tool.Mode = EDuplicateMode.Line;
+            _tool.Removeduplicates = true;
+            _tool.RemoveDuplicatesMode = ERemoveDuplicateMode.KeepFirstOccurence;
+
+            int result = await _tool.InvokeAsync(_loggerMock.Object, default);
+            result.Should().Be(0);
+
+            string consoleOutput = _consoleWriter.ToString().Trim();
+            consoleOutput.Should().Be("Rex\nRintintin\nMilou\nIdefix\nLassie\nKlebar\nKador\nSnoopy");
+        }
+
+        [Fact]
+        public async void LineModeRemove_KeepLast()
+        {
+            string filepath = Path.Combine("TestData", "LineWithDuplicates.txt");
+            _tool.Input = new FileInfo(filepath);
+
+            _tool.Mode = EDuplicateMode.Line;
+            _tool.Removeduplicates = true;
+            _tool.RemoveDuplicatesMode = ERemoveDuplicateMode.KeepLastOccurence;
+
+            int result = await _tool.InvokeAsync(_loggerMock.Object, default);
+            result.Should().Be(0);
+
+            string consoleOutput = _consoleWriter.ToString().Trim();
+            consoleOutput.Should().Be("Rintintin\nIdefix\nLassie\nKlebar\nKador\nRex\nSnoopy\nMilou");
+        }
+
+        [Fact]
+        public async void LineModeRemove_RemoveAll()
+        {
+            string filepath = Path.Combine("TestData", "LineWithDuplicates.txt");
+            _tool.Input = new FileInfo(filepath);
+
+            _tool.Mode = EDuplicateMode.Line;
+            _tool.Removeduplicates = true;
+            _tool.RemoveDuplicatesMode = ERemoveDuplicateMode.RemoveAll;
+
+            int result = await _tool.InvokeAsync(_loggerMock.Object, default);
+            result.Should().Be(0);
+
+            string consoleOutput = _consoleWriter.ToString().Trim();
+            consoleOutput.Should().Be("Rintintin\nIdefix\nLassie\nKlebar\nKador\nSnoopy");
+        }
+
+        [Fact]
+        public async void OffsetLengthModeRemove_KeepFirst()
+        {
+            string filepath = Path.Combine("TestData", "OffsetLength.txt");
+            _tool.Input = new FileInfo(filepath);
+
+            _tool.Mode = EDuplicateMode.OffsetLength;
+            _tool.Offset = 2;
+            _tool.Length = 4;
+            _tool.Removeduplicates = true;
+            _tool.RemoveDuplicatesMode = ERemoveDuplicateMode.KeepFirstOccurence;
+
+            int result = await _tool.InvokeAsync(_loggerMock.Object, default);
+            result.Should().Be(0);
+
+            string consoleOutput = _consoleWriter.ToString().Trim();
+            consoleOutput.Should().Be("00aaaa0000\n11bbbb1111\n22cccc2222\n33dddd3333\n44eeee4444\n66ffff6666\n77gggg7777\n99hhhh9999");
+        }
+
+        [Fact]
+        public async void OffsetLengthModeRemove_KeepLast()
+        {
+            string filepath = Path.Combine("TestData", "OffsetLength.txt");
+            _tool.Input = new FileInfo(filepath);
+
+            _tool.Mode = EDuplicateMode.OffsetLength;
+            _tool.Offset = 2;
+            _tool.Length = 4;
+            _tool.Removeduplicates = true;
+            _tool.RemoveDuplicatesMode = ERemoveDuplicateMode.KeepLastOccurence;
+
+            int result = await _tool.InvokeAsync(_loggerMock.Object, default);
+            result.Should().Be(0);
+
+            string consoleOutput = _consoleWriter.ToString().Trim();
+            consoleOutput.Should().Be("11bbbb1111\n22cccc2222\n44eeee4444\n55aaaa5555\n66ffff6666\n77gggg7777\n88dddd8888\n99hhhh9999");
+        }
+
+        [Fact]
+        public async void OffsetLengthModeRemove_RemoveAll()
+        {
+            string filepath = Path.Combine("TestData", "OffsetLength.txt");
+            _tool.Input = new FileInfo(filepath);
+
+            _tool.Mode = EDuplicateMode.OffsetLength;
+            _tool.Offset = 2;
+            _tool.Length = 4;
+            _tool.Removeduplicates = true;
+            _tool.RemoveDuplicatesMode = ERemoveDuplicateMode.RemoveAll;
+
+            int result = await _tool.InvokeAsync(_loggerMock.Object, default);
+            result.Should().Be(0);
+
+            string consoleOutput = _consoleWriter.ToString().Trim();
+            consoleOutput.Should().Be("11bbbb1111\n22cccc2222\n44eeee4444\n66ffff6666\n77gggg7777\n99hhhh9999");
+        }
     }
 }

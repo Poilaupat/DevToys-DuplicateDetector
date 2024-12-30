@@ -135,27 +135,18 @@ namespace DuplicateDetectorExtension {
         /// <summary>
         ///   Looks up a localized string similar to Length.
         /// </summary>
-        internal static string Length {
+        internal static string LengthSetting {
             get {
-                return ResourceManager.GetString("Length", resourceCulture);
+                return ResourceManager.GetString("LengthSetting", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to The length of the substring to consider when searching for duplicates.
         /// </summary>
-        internal static string LengthDescription {
+        internal static string LengthSettingDescription {
             get {
-                return ResourceManager.GetString("LengthDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Line.
-        /// </summary>
-        internal static string Line {
-            get {
-                return ResourceManager.GetString("Line", resourceCulture);
+                return ResourceManager.GetString("LengthSettingDescription", resourceCulture);
             }
         }
         
@@ -189,9 +180,9 @@ namespace DuplicateDetectorExtension {
         /// <summary>
         ///   Looks up a localized string similar to Mode.
         /// </summary>
-        internal static string Mode {
+        internal static string ModeSetting {
             get {
-                return ResourceManager.GetString("Mode", resourceCulture);
+                return ResourceManager.GetString("ModeSetting", resourceCulture);
             }
         }
         
@@ -200,9 +191,27 @@ namespace DuplicateDetectorExtension {
         ///“Line” allows you to search for duplicates on the entire line.
         ///“Offset/Length” allows you to search for duplicates in a specific part of each line..
         /// </summary>
-        internal static string ModeDescription {
+        internal static string ModeSettingDescription {
             get {
-                return ResourceManager.GetString("ModeDescription", resourceCulture);
+                return ResourceManager.GetString("ModeSettingDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line.
+        /// </summary>
+        internal static string ModeSettingLine {
+            get {
+                return ResourceManager.GetString("ModeSettingLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offset / Length.
+        /// </summary>
+        internal static string ModeSettingOffsetLength {
+            get {
+                return ResourceManager.GetString("ModeSettingOffsetLength", resourceCulture);
             }
         }
         
@@ -218,27 +227,18 @@ namespace DuplicateDetectorExtension {
         /// <summary>
         ///   Looks up a localized string similar to Offset.
         /// </summary>
-        internal static string Offset {
+        internal static string OffsetSetting {
             get {
-                return ResourceManager.GetString("Offset", resourceCulture);
+                return ResourceManager.GetString("OffsetSetting", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to The zero-based index of the substring to consider in the line when searching duplicates.
         /// </summary>
-        internal static string OffsetDescription {
+        internal static string OffsetSettingDescription {
             get {
-                return ResourceManager.GetString("OffsetDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Offset / Length.
-        /// </summary>
-        internal static string OffsetLength {
-            get {
-                return ResourceManager.GetString("OffsetLength", resourceCulture);
+                return ResourceManager.GetString("OffsetSettingDescription", resourceCulture);
             }
         }
         
@@ -261,11 +261,86 @@ namespace DuplicateDetectorExtension {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unduplicate.
+        /// </summary>
+        internal static string RemoveButtonTitle {
+            get {
+                return ResourceManager.GetString("RemoveButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Controls the way duplicates are removed :
+        ///&quot;KeepFirstOccurence&quot; : Removes duplicates but first
+        ///&quot;KeepLastOccurence&quot; : Removes duplicates but last
+        ///&quot;RemoveAll&quot; : Removes all duplicates.
+        /// </summary>
+        internal static string RemoveDuplicatesModeSettingDescription {
+            get {
+                return ResourceManager.GetString("RemoveDuplicatesModeSettingDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By default, output will show found duplicates. If this flag is set, the input text with removed duplicates will be shown instead. .
+        /// </summary>
+        internal static string RemoveDuplicatesSettingDescription {
+            get {
+                return ResourceManager.GetString("RemoveDuplicatesSettingDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duplicate detector.
         /// </summary>
         internal static string ShortDisplayTitle {
             get {
                 return ResourceManager.GetString("ShortDisplayTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Controls the way duplicates are removed. RemoveAll removes all lines containing duplicates while KeepFirst or KeepLast keep the first/last occurence.
+        /// </summary>
+        internal static string UndiplicateSettingDescription {
+            get {
+                return ResourceManager.GetString("UndiplicateSettingDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keep First.
+        /// </summary>
+        internal static string UnduplicateModeSettingKeepFirst {
+            get {
+                return ResourceManager.GetString("UnduplicateModeSettingKeepFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keep Last.
+        /// </summary>
+        internal static string UnduplicateModeSettingKeepLast {
+            get {
+                return ResourceManager.GetString("UnduplicateModeSettingKeepLast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove All.
+        /// </summary>
+        internal static string UnduplicateModeSettingRemoveAll {
+            get {
+                return ResourceManager.GetString("UnduplicateModeSettingRemoveAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unduplicate mode.
+        /// </summary>
+        internal static string UnduplicateSettingTitle {
+            get {
+                return ResourceManager.GetString("UnduplicateSettingTitle", resourceCulture);
             }
         }
     }

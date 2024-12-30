@@ -9,9 +9,16 @@ namespace DuplicateDetectorExtension.Models
     /// <summary>
     /// The duplicate search mode
     /// </summary>
-    internal enum EDuplicateMode
+    public enum EDuplicateMode
     {
         Line,
         OffsetLength,
+    }
+
+    public enum ERemoveDuplicateMode
+    {
+        KeepFirstOccurence,
+        KeepLastOccurence,
+        RemoveAll,
     }
 }

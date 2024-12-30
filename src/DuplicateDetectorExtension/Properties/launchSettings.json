@@ -7,7 +7,7 @@
         "EXTRAPLUGIN": "$(TargetDir)"
       }
     },
-    "DevToys CLI": {
+    "DevToys CLI Search": {
       "commandName": "Executable",
       "executablePath": "%DevToysCliDebugEntryPoint%",
       "commandLineArgs": "duplicatedetector --input \"..\\..\\..\\..\\..\\doc\\SampleOffsetLength.txt\" --mode OffsetLength --offset 2 --length 4\r\n",
@@ -15,10 +15,18 @@
         "EXTRAPLUGIN": "$(TargetDir)"
       }
     },
-    "Profile 1": {
+    "DevToys CLI Remove": {
       "commandName": "Executable",
       "executablePath": "%DevToysCliDebugEntryPoint%",
-      "commandLineArgs": "duplicatedetector --input \"..\\..\\..\\..\\..\\doc\\SampleLine.txt\" --mode OffsetLength --offset 3 --length 4\r\n",
+      "commandLineArgs": "duplicatedetector --input \"..\\..\\..\\..\\..\\doc\\SampleOffsetLength.txt\" --mode OffsetLength --offset 2 --length 4 --remove-duplicates --remove-duplicates-mode KeepLastOccurence\r\n",
+      "environmentVariables": {
+        "EXTRAPLUGIN": "$(TargetDir)"
+      }
+    },
+    "DevToys CLI Help": {
+      "commandName": "Executable",
+      "executablePath": "%DevToysCliDebugEntryPoint%",
+      "commandLineArgs": "duplicatedetector --help\r\n",
       "environmentVariables": {
         "EXTRAPLUGIN": "$(TargetDir)"
       }
