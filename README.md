@@ -67,7 +67,7 @@ or
 
 If the flag `--remove-duplicates` or `-rd` is set, the output will change to display original text with duplicates removed
 
-You can control the way duplicates are removed this the option `--remove-duplicates-mode` or `-drm` that can take the following values :
+You can control the way duplicates are removed this the option `--remove-duplicates-mode` or `-rdm` that can take the following values :
 - `KeepFirstOccurence`
 - `KeepLastOccurence`
 - `RemoveAll`
