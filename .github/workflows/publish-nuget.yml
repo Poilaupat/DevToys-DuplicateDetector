@@ -1,8 +1,9 @@
-name: build-plugin
-on: 
+name: publish-nuget
+on:
   workflow_dispatch:
-  push:
-    branches: [main]
+#  release: 
+#    types: [published]
+
 env:
   DOTNET_VERSION: '8.0.x'
   SOLUTION: 'src/DevToysDuplicateDetector.sln'
@@ -24,9 +25,12 @@ jobs:
      - name: Restore
        run: dotnet restore ${{ env.SOLUTION }}
 
-     - name: Build
+     - name: Build Plugin
        run: dotnet build -c Release  ${{ env.SOLUTION }} --no-restore
 
-     - name : Test
+     - name: Test
        run: dotnet test -c Release ${{ env.SOLUTION }} --no-build
+
+     - name: Build Nuget
+       run: dotnet pack -c Release ${{ env.SOLUTION }} -p:Version=${{ github.event.release.tag_name }}
       
