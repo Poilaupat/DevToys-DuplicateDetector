@@ -1,6 +1,5 @@
 name: publish-nuget
 on:
-#  workflow_dispatch:
   release: 
     types: [published]
 
@@ -33,4 +32,7 @@ jobs:
 
      - name: Build Nuget
        run: dotnet pack -c Release ${{ env.SOLUTION }} -p:Version=${{ github.event.release.tag_name }}
+     
+     - name: Publish Nuget
+       run: dotnet nuget push "*.nupkg" --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
       
