@@ -35,11 +35,7 @@ jobs:
      - name: Build Nuget
 #       run: dotnet pack -c Release ${{ env.SOLUTION }} -p:Version=${{ github.event.release.tag_name }}
        run: dotnet pack -c Release ${{ env.SOLUTION }} -p:Version=${{ env.APP_VERSION }}
-     - name: Where
-       run: Get-Location
+
      - name: Publish Nuget
-       run: dotnet nuget push DuplicateDetectorExtension.${{ env.APP_VERSION }}.nupkg --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+       run: dotnet nuget push bin/Release/*.nupkg --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
          
-     - name: Publish Symbols
-       run: dotnet nuget push DuplicateDetectorExtension.${{ env.APP_VERSION }}.symbols.nupkg --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
-      
