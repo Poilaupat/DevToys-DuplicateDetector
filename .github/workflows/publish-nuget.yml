@@ -38,6 +38,6 @@ jobs:
 
      - name: Publish Nuget
        run: |
-         dotnet nuget push bin/Release/DuplicateDetectorExtension.${{ env.APP_VERSION }}.nupkg --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
-         dotnet nuget push bin/Release/DuplicateDetectorExtension.${{ env.APP_VERSION }}.symbols.nupkg --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+         dotnet nuget push src/DuplicateDetectorExtension/bin/Release/DuplicateDetectorExtension.${{ env.APP_VERSION }}.nupkg --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+         dotnet nuget push src/DuplicateDetectorExtension/bin/Release/DuplicateDetectorExtension.${{ env.APP_VERSION }}.symbols.nupkg --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
          
